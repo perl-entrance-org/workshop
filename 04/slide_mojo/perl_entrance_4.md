@@ -1199,8 +1199,8 @@
 
     # 「$nqounet{mail}」は配列のリファレンス
     for my $mail ( @{$nqounet{mail}} ){
-            # リファレンスを「@{...}」で囲う
-        print "$mail\n";
+        # リファレンスを「@{...}」で囲う
+      print "$mail\n";
     }
 
 * リファレンスを「元の形式に戻す」ことを「デリファレンス」といいます
@@ -1212,7 +1212,12 @@
 
     my $scalar     = 'string';
     my $scalar_ref = \$scalar; # スカラーのリファレンス
+    print $scalar;
+    print "\n";
+    print $scalar_ref;
+    print "\n";
     print ${$scalar_ref};
+    print "\n";
 
 * スカラーのリファレンスをデリファレンスするには、リファレンスを「**${...}**」で囲います
 
@@ -1226,9 +1231,10 @@
     my @array     = ('a', 'b', 'c');
     my $array_ref = \@array;        # 配列のリファレンス
     print join("\n", @{$array_ref}); # 配列全体をデリファレンス
-    print $array_ref->[0];  # 配列のリファレンスの最初の要素
-    print $array_ref->[1];  # 配列のリファレンスの2つめの要素
-    print $array_ref->[-1]; # 配列のリファレンスの最後の要素
+    print "\n";
+    print "$array_ref->[0]\n";  # 配列のリファレンスの最初の要素
+    print "$array_ref->[1]\n";  # 配列のリファレンスの2つめの要素
+    print "$array_ref->[-1]\n"; # 配列のリファレンスの最後の要素
 
 * 配列のリファレンスをデリファレンスするには、リファレンスを「**@{...}**」で囲います
 * 配列のリファレンス内の一つの要素をデリファレンスする場合は「**->**（矢印演算子）」を使う
@@ -1242,11 +1248,11 @@
 
     my %hash = ( key1 => 'value1', key2 => 'value2' );
     my $hash_ref = \%hash;
-          # ハッシュのリファレンス
+        # ハッシュのリファレンスを作成
     for my $key ( keys %{$hash_ref} ) {
-          # ハッシュ全体をデリファレンス
+        # ハッシュ全体をデリファレンス
       print "$key : $hash_ref->{$key}\n";
-          # ハッシュの要素を表示する
+        # ハッシュの要素を表示する
     }
 
 * ハッシュのリファレンスをデリファレンスするには、リファレンスを「**%{...}**」で囲います
@@ -1258,17 +1264,17 @@
 
 ## Perlの変数について整理
 
-* 「$str」のような「スカラー変数」は、スカラー値を1つ持つことができる
-* 「@str」のような「配列」は、複数のスカラー値を持つことができる
-* 「%str」のような「ハッシュ（連想配列）」は、配列の一種で、スカラー値に名前（キー）をつけて持つことができる
+* 「`$str`」のような「スカラー変数」は、スカラー値を1つ持つことができる
+* 「`@str`」のような「配列」は、複数のスカラー値を持つことができる
+* 「`%str`」のような「ハッシュ（連想配列）」は、配列の一種で、スカラー値に名前（キー）をつけて持つことができる
 
 ----------
 
 ## リファレンスについて整理
 
-* リファレンスを作成するには、変数（スカラー、配列、ハッシュ）の前に「\（バックスラッシュ）」をつける
-* 配列のリファレンスは「**+[...]**（ブラケット）」を使用する（「+」は省略可能）
-* ハッシュのリファレンスは「**+{...}**（ブレース）」を使用する（「+」は省略可能）
+* リファレンスを作成するには、変数（スカラー、配列、ハッシュ）の前に「`\`（バックスラッシュ）」をつける
+* 配列のリファレンスは「**+[...]**（ブラケット）」を使用する（「`+`」は省略可能）
+* ハッシュのリファレンスは「**+{...}**（ブレース）」を使用する（「`+`」は省略可能）
 * リファレンスを使用するには、デリファレンスが必要です
 * デリファレンスするには、リファレンスを **${...}**、**@{...}**、**%{...}**で囲う、または、「**->**（矢印演算子）」を使用する
 
@@ -1287,36 +1293,37 @@
 ### 変数（ハッシュ）を定義
 
     my @mails = (
-        'nobu at nishimiyahara.net',
-        'coworking at shin-osaka.in',
+      'nobu at nishimiyahara.net',
+      'coworking at shin-osaka.in',
     );
     my @webs = (
-        'http://nqou.net',
-        'http://www.nishimiyahara.net',
-        'http://www.shin-osaka.in',
+      'http://nqou.net',
+      'http://www.nishimiyahara.net',
+      'http://www.shin-osaka.in',
     );
     my %nqounet = (
-        name => 'nqounet',
-        mail => \@mails,
-        web  => \@webs,
+      name => 'nqounet',
+      mail => \@mails,
+      web  => \@webs,
     );
 
-#### 書いて実行してみよう！
+#### 書いてみよう！
 
 ----------
 
 ## 複雑なデータ構造
 ### Dumperを使わずにピンポイントで表示
 
-    print $nqounet{web}->[2]; # http://www.shin-osaka.in
-    # %nqounetの「web」というキーの値が配列のリファレンス
-    # その配列のリファレンスをデリファレンスした3番目の値
+    print "$nqounet{web}->[2]\n";
+      # http://www.shin-osaka.in
+      # %nqounetの「web」というキーの値が配列のリファレンス
+      # その配列のリファレンスをデリファレンスした3番目の値
+    print "$nqounet{mail}->[0]\n";
+      # nobu at nishimiyahara.net
+      # %nqounetの「mail」というキーの値が配列のリファレンス
+      # その配列のリファレンスをデリファレンスした最初の値
 
-    print $nqounet{mail}->[0]; # nobu at nishimiyahara.net
-    # %nqounetの「mail」というキーの値が配列のリファレンス
-    # その配列のリファレンスをデリファレンスした最初の値
-
-#### 書いて実行してみよう！
+#### 続けて書いて実行してみよう！
 
 ----------
 
@@ -1332,8 +1339,8 @@
       old_type => \%nqounet,
       new_type => \%papix,
     };
-    print $perl_entrance->{new_type}->{web}->[0];
-        # http://papix.net
+    print "$perl_entrance->{new_type}->{web}->[0]\n";
+      # http://papix.net
 
 #### 続けて書いて実行してみよう！
 
@@ -1342,23 +1349,22 @@
 ## 省略の美学
 ### 「->（矢印演算子）」は部分的に省略可能
 
-    print $nqounet{web}->[2];
-    print $nqounet{web}[2];
-    # ブレースとブラケットの間の矢印は省略できる
+    print "$nqounet{web}->[2]\n";
+    print "$nqounet{web}[2]\n";
+      # ブレースとブラケットの間の矢印は省略できる
+    print "$perl_entrance->{new_type}->{web}->[0]\n";
+    print "$perl_entrance->{new_type}{web}[0]\n";
+      # ブレース同士、ブラケット同士も同じ
+    # print "$perl_entrance{new_type}{web}[0]\n"; # エラー
+      # %perl_entranceというハッシュの「new_type」をキーとする値を参照している
 
-    print $perl_entrance->{new_type}->{web}->[0];
-    print $perl_entrance->{new_type}{web}[0];
-    # ブレース同士、ブラケット同士も同じ
-    print $perl_entrance{new_type}{web}[0]; # エラー
-    # %perl_entranceというハッシュの「new_type」をキーとする値を参照している
-
-#### 書いて実行してみよう！
+#### 続けて書いて実行してみよう！
 
 ----------
 
 ## 変数（スカラー変数）のおさらい
 
-    my $str = 'これは文字列です';    
+    my $str = 'これは文字列です';
     my $num = 123;
     print "文字列（ $str ）と数値（ $num ）\n";
 
@@ -1370,20 +1376,7 @@
     print "$array[0]\n";
     print "@{array}\n";
     for my $item ( @array ) {
-        print "$item\n";
-    }
-
-----------
-
-## ハッシュの使い方のおさらい
-    
-    my %hash  = (
-        key1 => 'value1',
-        key2 => 'value2',
-    );
-    print "key1 : $hash{key1}\n";
-    for my $key ( keys %hash ) {
-        print "$key : $hash{$key}\n";
+      print "$item\n";
     }
 
 ----------
@@ -1394,7 +1387,20 @@
     print "$array_ref->[0]\n";
     print "@{$array_ref}\n";
     for my $item ( @{$array_ref} ) {
-        print "$item\n";
+      print "$item\n";
+    }
+
+----------
+
+## ハッシュの使い方のおさらい
+
+    my %hash  = (
+      key1 => 'value1',
+      key2 => 'value2',
+    );
+    print "key1 : $hash{key1}\n";
+    for my $key ( keys %hash ) {
+      print "$key : $hash{$key}\n";
     }
 
 ----------
@@ -1402,12 +1408,12 @@
 ## ハッシュのリファレンス
 
     my $hash_ref  = +{ # 「+」は省略可能
-        key1 => 'value1',
-        key2 => 'value2',
+      key1 => 'value1',
+      key2 => 'value2',
     };
     print "key1 : $hash_ref->{key1}\n";
     for my $key ( keys %{$hash_ref} ) {
-        print "$key : $hash_ref->{$key}\n";
+      print "$key : $hash_ref->{$key}\n";
     }
 
 ----------
