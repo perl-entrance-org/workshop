@@ -73,8 +73,6 @@
 
 ## Perlでのテスト - Test::More
 
-## テスト
-
 * プログラミング言語を使ってプロダクトを作る上で, テストは非常に重要です.
 	* まずテストから書き始める, というTDD(test-driven development)という開発手法があったりもします.
 * もちろんPerlには, テストを助けるモジュールがいくつかあります.
@@ -99,40 +97,48 @@
 
 	use Test::More;
 	
-	require 'sample.pl'; # テストするスクリプト
+	require_ok( 'sample.pl' ); # テストするスクリプト
 	
 	# &pow(2, 3) = 2 ** 3 = 8になるか確かめるテスト
-	ok( &pow(2, 3) == 8, '&pow(2, 3) = 8');
+	is( &pow(2, 3), 8, '&pow(2, 3) is 8');
 	
 	# テストの終わりを示すお約束
 	done_testing;
 
-* ok関数は, 1つ目の引数の式が真ならok, 偽ならngとなります.
-* 2つ目の引数はコメント(テストの説明)です.
+* is関数は, 1つ目の引数と2つ目の引数の値を比較して真ならok, 偽ならngとなります.
+* 3つ目の引数はコメント(テストの説明)です.
+* テスト用スクリプトは拡張子を`.t`にして, `t`ディレクトリに格納することが習慣となっています.
 
 ## テスト実行
 
-	$ perl sample.t
-	ok 1 - &pow(2, 3) = 8
-	1..1
+	$ perl t/sample.t
+	ok 1 - require 'sample.pl';
+	ok 2 - &pow(2, 3) is 8
+	1..2
 
 * 問題がないなら, このように'ok'が出力されます.
 
 ## 失敗した場合
 
-	$ perl sample.t
-	not ok 1 - &pow(2, 3) = 8
-	#   Failed test '&pow(2, 3) = 8'
-	#   at sample.t line 5.
-	1..1
-	# Looks like you failed 1 test of 1.
+	$ perl t/sample.t
+	ok 1 - require 'sample.pl';
+	not ok 2 - &pow(2, 3) is 8
+	#   Failed test '&pow(2, 3) is 8'
+	#   at t/sample.t line 5.
+	#          got: '9'
+	#     expected: '8'
+	1..2
+	# Looks like you failed 1 test of 2.
 
 * 実装した関数に問題があり, 条件式が偽になる場合, このようなエラーが出力されます.
 
-## テスト用関数(代表的なもの)
+## テスト用関数(1)
 
-	# 引数の$gotと$expectedが等しいかテスト.
+	# 引数の$gotと$expectedをeqで比較して真かどうかテスト.
 	is( $got, $expected, $test_name );
+
+	# 引数の1つ目が真かどうかテスト.
+	ok( $got eq $expected, $test_name);
 
 	# 引数の$gotが正規表現のqr/expected/にマッチするかテスト.
 	like( $got, qr/expected/, $test_name );
@@ -141,6 +147,20 @@
 	is_deeply( $got, $expected, $test_name );
 
 * `$test_name`はテストの説明です.
+
+## テスト用関数(2)
+
+	# 引数の$gotと$expectedをneで比較して真かどうかテスト.
+	isnt( $got, $expected, $test_name );
+
+	# 引数の$gotが正規表現のqr/expected/にマッチしないかテスト.
+	unlike( $got, qr/expected/, $test_name );
+
+	# 引数の$gotと$expectedを演算子$opで比較して真かどうかテスト.
+	cmp_ok( $got, $op, $expected, $test_name );
+	
+	# 例: $gotと$expectedを'&&'演算子で比較
+	cmp_ok( $got, '&&', $expected, $test_name );
 
 ## Test::Moreの詳細
 
@@ -167,20 +187,17 @@
     binmode STDERR, ":utf8";
 
 * スクリプトを書く前に, このお約束のコードを書くようにしましょう.
-* これ以下, お約束は省略します.
+* 以下, お約束は省略します.
 
-## 復習問題
+## 復習問題(時間: 30分)
 
-## 復習問題(時間: 20分)
-
-* `perl-entrance-08.t`がテストスクリプト, `perl-entrance-08.pl`が練習問題を回答するスクリプトです.
-* 中に問題が書いてありますので, 問題に従ってスクリプトを記述すれば, `perl-entrance-08.t`が全てOKになるはずです.
+* `t/perl-entrance-08.t`がテストスクリプト, `perl-entrance-08.pl`が回答用スクリプトです.
+* 回答用スクリプトに問題が書いてありますので, 問題に従ってスクリプトを記述すれば, `perl-entrance-08.t`が全てOKになるはずです.
 * わからない点, こまった所は遠慮せず聞いて下さいね.
-	* ちなみに, `sample.t`, `sample.pl`は, 先程Test::Moreの説明で使ったスクリプトです.
+	* ちなみに, `t/sample.t`, `sample.pl`は, 先程Test::Moreの説明で使ったスクリプトです.
 
 ## Mojoliciousを使ってみよう
 
-## これからの目標
 * Perl入学式 \#8以降は, Mojoliciousを利用した簡単なウェブアプリケーション開発を経験しつつ, ここまでに学んだ知識や, ここまで紹介できなかったテクニックを披露していきたいと考えています.
 * \#8から\#12までの全4回で構成する... 予定です.
 
@@ -289,8 +306,7 @@
 
 * `hello.pl`の末尾に(`app->start;`の後に), このようなテンプレートを用意します.
 * テンプレートを用意することで, 複数のページで同じようなHTMLを使うことができます.
-* （？）同じテンプレートは, `template/index.html.ep`にあります.
-* テンプレートを別のファイルにする場合は`template/index.html.ep`として保存することで適用されます.
+* テンプレートを別ファイルとして保存する場合は`template/index.html.ep`として保存することで適用されます.
 
 ## テンプレートとデータ
 
@@ -331,7 +347,6 @@
 	</html>
 
 * このようなテンプレートに対し, stashで`name`, `hobby`, `language`を与え, あなたの自己紹介(プロフィール)ページを作ってみよう.
-* （？）同じテンプレートは, `template/profile.html.ep`にあります.
 
 ## 複数のページを作ってみよう
 
@@ -339,17 +354,10 @@
 
 ## インデックスページの用意
 
-	get '/' => sub {
-		my $self = shift;
-
-		$self->stash(name => '');
-		$self->render();
-	};
-	$app->start;
-
-* （？）`template/app.pl`を編集していきます.
-* `name`が空になっているので, あなたの名前を入力してください.
-* morboで実行し, ブラウザでアクセスするとリンクが出てきますが, クリックするとエラーが出力されます.
+* 先程練習問題の為にcloneしたgitリポジトリの中にある, `app.pl`を編集していきます.
+* 必要なテンプレートは`app.pl`の中に用意してあります.
+* stashで渡すデータである`name`が空になっているので, あなたの名前を入力してください.
+* morboで実行し, ブラウザでアクセスするとリンクが出てきます. しかし, リンクをクリックするとエラーが出力されます.
 
 ## プロフィールページの用意
 
