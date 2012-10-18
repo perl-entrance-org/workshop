@@ -61,11 +61,13 @@
 ## 準備
 * [Perl入学式のgithubアカウント](https://github.com/perl-entrance-org/)に, 第9回で使用するデータが入ったリポジトリがあります.
 	* まず最初に, `$ git clone git://github.com/perl-entrance-org/perl-entrance-2012-09.git`でclone(ダウンロード)しましょう.
+* gitがインストールされていない場合, インストールしましょう.
+	* Ubuntuの場合, `$ sudo apt-get install git-core`でOKです.
 
 ## 前回の復習(15分)
 * `hello.pl`を使います.
 * 既にテンプレートが用意されています. ｢# ここを埋めよう!｣と書かれた部分に適切なコードを書いて, あなたの名前を表示するページを表示するようにしましょう.
-* 端末で`$ morbo hello.pl`を実行し, ブラウザで`localhosot:3000`にアクセスすれば, 挙動を確認することができます.
+* 端末で`cd perl-entrance-2012-09`でcloneしたディレクトリに移動し, `$ morbo hello.pl`を実行します. ブラウザで`localhosot:3000`にアクセスすれば, 挙動を確認することができます.
 * 時間に余裕があれば, 自分でテンプレートを用意して, 複数のページを作ってみましょう.
 
 ## フォームとデータの送信
@@ -85,8 +87,8 @@
 	<head><title>hello!</title></head>
 	<body style='padding: 30px;'>
 		<form action="/hello" method="post">
-			<input type="text" name="name" size="20">
-			<input type="submit" name="submit" value="送信">
+			<input type="text" name="name" size="20" />
+			<input type="submit" name="submit" value="送信" />
 		</form>
 	</body>
 	</html>
@@ -104,30 +106,28 @@
 
 ## 解説(2)
 
-			<input type="text" name="name" size="20">
+			<input type="text" name="name" size="20" />
 
 * ここがフォームの本体です. `<input>`で, データを入力する部品を用意することができます.
 * `type`は部品の形状を指定します. 例えば`text`は, <input type="text" name="name" size="20"> このようなテキストを入力できる部品を用意してくれます.
 	* `text`以外にも, ラジオボタン`radio`, チェックボックス`checkbox`などがあります.
 
 ## 解説(3)
-			<input type="submit" name="submit" value="送信">
+			<input type="submit" name="submit" value="送信" />
 
-* `submit`は送信ボタン( <input type="submit" name="submit" value="送信"> )です. ボタンには, `value`で指定した文字が表示されます.
+* `submit`は送信ボタン( <input type="submit" name="submit" value="送信" /> )です. ボタンには, `value`で指定した文字が表示されます.
 * 送信ボタンを押すと, 入力されたデータは, `<input>`内部の`name`で指定された文字列と紐付られ, `action`で指定されたページへ転送されます.
 
 ## コードの書き換え
 	use Mojolicious::Lite;
 	use utf8;
 	
-	get '/' => sub {
-		my $self = shift;
-		$self->render();
-	} => 'index';
+	get '/' => 'index';
 	
 	app->start;
 
 * コードの部分(`__DATA__`より上の部分)は特に処理を行う必要がないので, このように変更します.
+	* いつもは`get '/'`と `=> 'index'`の間に`=> sub { ... }`でコードを書いていましたが, 今回のように, 処理がない場合は省略可能です.
 * とりあえず, この時点で実行してみましょう.
 
 ## 実行結果
@@ -168,11 +168,11 @@
 * 先程, `<form>`で`method="post"`と設定したので, 先頭をpostにしています. `method="get"`と設定した場合は`get`にします.
 
 ## 解説(2)
-	my $name = $self->param('name') || 'none';
+	my $name = $self->param('name') || '名無し';
 
 * `param`を使うことで, フォームから送信されたデータを受け取ることができます.
 * 先程, テキストボックスは`<input type="text" name="name" size="20">`で宣言していた為, テキストボックスに入力された名前は`name`で参照することができます.
-* `$self->param('name') || 'none'`としているのは, 入力が空だった場合にわかりやすくする為です(｢こんにちはnoneさん｣と表示される).
+* `$self->param('name') || '名無し'`としているのは, 入力が空だった場合にわかりやすくする為です(｢こんにちはnoneさん｣と表示される).
 
 ## 実行結果
 * これで正常に動作するはずです.
@@ -244,8 +244,8 @@
 	% for my $topic (qw/名前 身長 体重 年齢 趣味/) {
 			<tr>
 				<td><%= $topic ></td>
-				<td><%= $data{$topic} %></td>
-			<tr>
+				<td><%= $data->{$topic} %></td>
+			</tr>
 	% }
 		</table>
 	</body>
@@ -264,6 +264,56 @@
 	* フォームに入力した文字がアルファベットの場合, `hello, (入力した文字列)さん!`と表示する.
 	* フォームに入力した文字が`+`, `-`, `/`, `*`, `%`で区切られた2つの数値(例えば`123+45`)なら, その演算を行い, 結果を出力する(例の場合, `123 + 45 = 168`と表示する).
 	* それ以外の場合, `undefined`と表示する.
+
+## レイアウト
+	<html>
+	<head><title>... title ...</title></head>
+	<body style='padding: 30px;'>
+		... contents ...
+	</body>
+	</html>
+
+* テンプレートの中で, 常に同じ記述を使うという箇所がいくつかあります.
+* 例えば, 上記のヘッダの部分など.
+
+## レイアウト
+* レイアウトを使えば, このような｢複数のページで同一の記述｣をまとめることができます.
+* それでは早速, 使ってみましょう.
+	* 先程使った`list.pl`を, レイアウトを使って更に改造します.
+
+## レイアウト
+	@@ layouts/common.html.ep
+	<html>
+	<head><title><%= $title %></title></head>
+	<body style='padding: 30px;'>
+		<%= content %>
+	</body>
+	</html>
+
+* `__DATA__`以下の部分にレイアウトを記載します.
+* `<%= content %>`には, それぞれのページで表示する内容が埋め込まれます.
+* ヘッダは共有でも, ページのタイトルはそれぞれ異なります. `<%= $title %>`とすることで, その部分だけ変更することができます.
+
+## レイアウト
+	@@ index.html.ep
+	% layout 'common', title => 'Input'
+		<form action="/data" method="post">
+			名前: <input type="text" name="name" size="20"><br>
+			身長: <input type="text" name="height" size="4">cm<br>
+			体重: <input type="text" name="weight" size="4">kg<br>
+			年齢: <input type="text" name="age" size="4"><br>
+			趣味: <input type="text" name="hobby" size="20"><br>
+			<input type="submit" name="submit" value="送信"><br>
+		</form>
+
+* レイアウトを使うと, テンプレートをこのように書くことができます.
+* `% layout 'common'`で使用するテンプレートの名前を指定します. 更に,`title => 'Input'`でページのタイトルを変更することができます(テンプレートの`<%= $title %>`に埋め込まれる).
+
+## 練習問題(15分)
+* `list.pl`の, `data.html.ep`のテンプレートを, レイアウトを使うように書き換えてみよう.
+
+## getとpost
+
 
 ## 質問タイム
 <!-- data-scale="0.5" -->
