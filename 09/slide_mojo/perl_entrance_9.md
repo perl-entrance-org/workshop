@@ -217,7 +217,6 @@
 * 実は, テンプレートにはperlのコードを埋め込むことができます.
 * この機能を使えば, 複雑な(冗長な)テンプレートを, シンプルに書きなおすことができます.
 * では, 冗長なテンプレートで書かれた`list.pl`を書き換えて行きましょう.
-
 ## コードの書き換え
 	post '/data' => sub {
 		my $self = shift;
@@ -299,9 +298,7 @@
 	% layout 'common', title => 'Input'
 		<form action="/data" method="post">
 			名前: <input type="text" name="name" size="20"><br>
-			身長: <input type="text" name="height" size="4">cm<br>
-			体重: <input type="text" name="weight" size="4">kg<br>
-			年齢: <input type="text" name="age" size="4"><br>
+				...
 			趣味: <input type="text" name="hobby" size="20"><br>
 			<input type="submit" name="submit" value="送信"><br>
 		</form>
