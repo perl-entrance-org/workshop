@@ -1,0 +1,3 @@
+[submodule "slider_reveal"]
+	path = slider_reveal
+	url = git://github.com/nqounet/p5-md2reveal.git

@@ -1,0 +1,11 @@
+#md2reveal h1 {
+  font-size: 2em;
+}
+#md2reveal li>code,
+#md2reveal p>code {
+  background-color: rgba(127, 127, 127, 0.4);
+  font-family: Ricty, monaco, monospace;
+}
+.appendix .reveal .state-background{
+  background-color: rgba(150, 210, 80, 0.3);
+}
