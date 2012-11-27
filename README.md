@@ -45,7 +45,7 @@ git clone したあと、サブモジュールをすべてupdateしてくださ�
 
 スライドの一覧を見ることが出来ると思います。
 
-![image](public/images/md2reveal.jpg)
+![image](https://raw.github.com/perl-entrance-org/workshop/master/public/images/md2reveal.jpg)
 
 お好みのスライドをクリックするとスタートします。
 
