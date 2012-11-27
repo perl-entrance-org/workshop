@@ -1,4 +1,6 @@
 # ![Perl入学式](/images/perl-entrance_t.png)
+* スペースキーを押すと進み、ESCキーを押すと全体を俯瞰できます。
+* [Chrome](https://www.google.com/intl/ja/chrome/browser/)や[Firefox](http://www.mozilla.jp/firefox/)でご覧ください。
 
 # Perl入学式 #10
 <http://www.perl-entrance.org>
@@ -6,7 +8,7 @@
 * 日時
     * 2012年11月25日（日） 14:00 - 17:00
 * 会場
-    * Joe'sクラウドコンピューティング
+    * Joe'sビジネスセンター
     * <http://www.joeswebhosting.net>
 
 # Perl入学式について
@@ -61,7 +63,6 @@
 # 準備
 * Perl
 * Mojolicious
-* Git
 
 ## Perl
 * `Perl`の環境を構築しておきましょう。
