@@ -37,6 +37,7 @@ git clone したあと、サブモジュールをすべてupdateしてくださ�
 
 よくわからない方は、ターミナルで上記に続けて、そこに以下のコードを貼り付けるとうまくいくかもしれません。
 
+    cpanm Mojolicious Path::Class Text::Markdown
     cd slider_reveal
     morbo md2reveal
     
