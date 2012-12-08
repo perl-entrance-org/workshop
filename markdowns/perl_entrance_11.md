@@ -47,8 +47,6 @@
 # \#11の目標
 * Perl入学式の最終目標である簡易掲示板を、復習しながら実際に作成していきます。
 
-
-
 # 本日の内容
 ## 本日の内容（その１）
 * 開発環境の準備
@@ -57,12 +55,14 @@
 * 記事を新しい順に表示する
 * 空文字または空白だけの投稿は無効にする
 * 投稿した時間を表示する
+
 ## 本日の内容（その２）
 * 投稿した時間をもう少しちゃんと表示する
 * 投稿した時間を好きな形式で表示する
 * URLっぽい文字列をリンクにする
 * HTMLタグをエスケープする
 * 記事ではなくデータとして保存する
+* リダイレクト後にメッセージを表示させる
 
 # 開発環境の準備
 * Perl
@@ -164,6 +164,7 @@
 * [ソースコード](https://github.com/perl-entrance-org/perl-entrance-2012-11/commit/9b6f3bda135828de0bcbf1d14790b4b1df2e0d54)
 * 参考になるページ
     * [flash - Mojolicious::Controller](https://github.com/yuki-kimoto/mojolicious-guides-japanese/wiki/Mojolicious%3A%3AController#wiki-flash)
+
 # 質問タイム
 
 # お疲れさまでした
