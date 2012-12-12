@@ -29,7 +29,6 @@ git clone したあと、サブモジュールをすべてupdateしてくださ�
     cd slider_reveal
     git submodule init
     git submodule update
-    cd ..
     
 
 ## スライドの起動
@@ -38,7 +37,7 @@ git clone したあと、サブモジュールをすべてupdateしてくださ�
 よくわからない方は、ターミナルで上記に続けて、そこに以下のコードを貼り付けるとうまくいくかもしれません。
 
     cpanm Mojolicious Path::Class Text::Markdown
-    cd slider_reveal
+    ln -s ../slider_reveal.conf md2reveal.conf
     morbo md2reveal
     
 
